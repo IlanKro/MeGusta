@@ -1,10 +1,31 @@
 <resources>
     <string name="app_name">MeGusta</string>
-    <string name="username_hint">username (length:5+)</string>
-    <string name="password_hint">password (length:8+)</string>
+    <string name="username_hint">username(length:5+)</string>
+    <string name="password_hint">password(length:8+)</string>
     <string name="login">Login</string>
     <string name="sign_up_button">Sign up</string>
     <string name="password_hint_2">password again</string>
     <string name="email_hint">email</string>
     <string name="signup">Signup</string>
+    <string name="add_item">Add item</string>
+    <string name="cancel">Cancel</string>
+    <string name="item_name">item name</string>
+    <string name="item_photo">photo</string>
+    <string name="item_price">price(₪)</string>
+    <string name="item_category">category</string>
+    <string name="item_rent">rent?</string>
+    <string name="item_location">location</string>
+    <string name="item_phone">phone number</string>
+    <string name="category1">Shoes</string>
+    <string name="category2">Shirts</string>
+    <string name="category3">Pants</string>
+    <string name="category4">Coats and Jackets</string>
+    <string name="category5">Accessories</string>
+    <string-array name="category">
+        <item>Shoes</item>
+        <item>Shirts</item>
+        <item>Pants</item>
+        <item>Coats and Jackets</item>
+        <item>Accessories</item>
+    </string-array>
 </resources>

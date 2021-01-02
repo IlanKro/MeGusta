@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/linearLayout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_item"
+        android:textSize="30sp"
+        tools:layout_conversion_absoluteHeight="40dp"
+        tools:layout_editor_absoluteY="118dp"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_conversion_absoluteWidth="121dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        tools:layout_conversion_absoluteHeight="19dp"
+        tools:layout_editor_absoluteY="158dp"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_conversion_absoluteWidth="66dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="@string/item_name"
+        android:id="@+id/item_name"
+        android:autofillHints=""
+        android:inputType="text"
+        tools:layout_conversion_absoluteHeight="45dp"
+        tools:layout_editor_absoluteY="178dp"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_conversion_absoluteWidth="200dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_photo"
+        tools:layout_conversion_absoluteHeight="19dp"
+        tools:layout_editor_absoluteY="222dp"
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_conversion_absoluteWidth="36dp" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/photo"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="upload image"
+        android:id="@+id/add_img_btn"
+        android:maxHeight="5dp"
+        android:maxWidth="5dp"
+        android:textSize="10sp"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_price"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="@string/item_price"
+        android:id="@+id/item_price"
+        android:autofillHints=""
+        android:inputType="numberDecimal"
+         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_category"
+        tools:layout_conversion_absoluteHeight="19dp"
+        tools:layout_editor_absoluteY="354dp"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_conversion_absoluteWidth="55dp" />
+
+    <Spinner
+        android:id="@+id/category"
+        android:layout_width="79dp"
+        android:layout_height="wrap_content"
+        tools:layout_conversion_absoluteHeight="24dp"
+        tools:layout_conversion_absoluteWidth="143dp"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="374dp" />
+
+    <LinearLayout
+        android:layout_width="102dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_rent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="56dp"
+            tools:layout_editor_absoluteX="178dp"
+            tools:layout_editor_absoluteY="398dp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_conversion_absoluteHeight="48dp"
+            tools:layout_conversion_absoluteWidth="48dp"
+            tools:layout_editor_absoluteX="182dp"
+            tools:layout_editor_absoluteY="417dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_location"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="@string/item_location"
+        android:id="@+id/item_location"
+        android:autofillHints=""
+        android:inputType="text"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_phone"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="@string/item_phone"
+        android:id="@+id/item_phone"
+        android:autofillHints=""
+        android:inputType="phone"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnDialogCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_item" />
+
+        <Button
+            android:id="@+id/btnDialogAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>
