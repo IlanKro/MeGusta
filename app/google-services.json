@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822894173961",
+    "project_id": "me-gusta-88b9e",
+    "storage_bucket": "me-gusta-88b9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822894173961:android:78a5dfcc0d5650f71efdd8",
+        "android_client_info": {
+          "package_name": "com.example.megusta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822894173961-49hv1k9df4t506mq20l4rtbhvkdthtsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU8YL_KNfMHnfP1CYH9O5Og5yJf2gvPOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822894173961-49hv1k9df4t506mq20l4rtbhvkdthtsf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

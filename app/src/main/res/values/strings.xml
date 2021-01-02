@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">MeGusta</string>
-    <string name="username_hint">username</string>
-    <string name="password_hint">password</string>
+    <string name="username_hint">username (length:5+)</string>
+    <string name="password_hint">password (length:8+)</string>
     <string name="login">Login</string>
     <string name="sign_up_button">Sign up</string>
-    <string name="password_hint_2">Password again</string>
+    <string name="password_hint_2">password again</string>
     <string name="email_hint">email</string>
     <string name="signup">Signup</string>
 </resources>
