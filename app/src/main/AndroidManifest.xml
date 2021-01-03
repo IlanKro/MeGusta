@@ -15,7 +15,9 @@
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".MainMenu"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

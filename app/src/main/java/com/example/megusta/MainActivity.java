@@ -181,10 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(SIGNUP_STATUS, "createUserWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-                    UserProfileChangeRequest.Builder builder=
-                            new UserProfileChangeRequest.Builder().setDisplayName(display_name);
                     assert user != null;
-                    user.updateProfile(builder.build());
+                    user.updateProfile( new UserProfileChangeRequest.Builder().setDisplayName(display_name).build());
                     Toast.makeText(MainActivity.this,"User Successfully created!",Toast.LENGTH_LONG).show();
                 } else {
                     // If sign in fails, display a message to the user.

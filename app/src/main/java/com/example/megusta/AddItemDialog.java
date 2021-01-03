@@ -1,14 +1,12 @@
 package com.example.megusta;
 
 import android.app.Dialog;
-import android.app.admin.SystemUpdatePolicy;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
+
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,27 +18,41 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.File;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddItemDialog extends Dialog implements View.OnClickListener {
-    private EditText name;
+    private EditText name,price,location,phone;
     private ImageView photo;
-    private Button btn_img;
-    private EditText price;
     //spinner
     private Spinner spinner;
     private ArrayAdapter<CharSequence> adapter;
     private String category;
-
     private CheckBox rent;
-    private EditText location;
-    private EditText phone;
-    private Button btn_add;
-    private Button btn_cancel;
-    private Context context;
+    private Button btn_cancel,btn_add,btn_img;
+    private final Context context;
+    //firebase:
+    private final FirebaseAuth mAuth;
+    private final FirebaseUser current_user;
+    private final FirebaseFirestore db;
+    private final String TAG="add_item";
+
     public AddItemDialog(@NonNull Context context) {
         super(context);
         this.context=context;
+        db=FirebaseFirestore.getInstance();
+        mAuth=FirebaseAuth.getInstance();
+        current_user=mAuth.getCurrentUser();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
     public void CreateDialog(@NonNull Context context) {
         setContentView(R.layout.create_item_dialog);
@@ -54,6 +66,7 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         btn_img=findViewById(R.id.add_img_btn);
         btn_img.setOnClickListener(this);
         rent=findViewById(R.id.rent);
+        price=findViewById(R.id.item_price);
         location=findViewById(R.id.item_location);
         phone=findViewById(R.id.item_phone);
         btn_add= findViewById(R.id.btnDialogAdd);
@@ -71,7 +84,12 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         EventHandler();
     }
 
-    public Boolean validateItem() throws ValidationException {
+    private Boolean validateItem() throws ValidationException {
+        if(name.getText().toString().isEmpty() || location.getText().toString().isEmpty() ||
+           phone.getText().toString().isEmpty() || price.getText().toString().isEmpty())
+            throw new ValidationException("All fields are required!");
+        else if(Integer.parseInt(price.getText().toString())<0)
+            throw new ValidationException("price can't be negative!");
         return true;
     }
 
@@ -81,7 +99,7 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
             try {
                 if (validateItem()) { //check if the validation is right.
                     //TODO add to database
-                    Toast.makeText(context, "Item added successfully", Toast.LENGTH_LONG).show();
+                    addItem();
                     this.dismiss();
                 }
             }
@@ -99,32 +117,35 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
     }
 
     private void selectImage() {
-        /*
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context.this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    context.startActivityForResult(intent, 1);
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
-                }
-                else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-        */
+
+    }
+
+    private void addItem() {
+        Map<String,Object> item = new HashMap<>();
+        item.put("user_name",current_user.getDisplayName());
+        item.put("item_name",name.getText().toString());
+        item.put("item_category",category);
+        item.put("item_photo","FAKE_PATH"); //TODO: add image path.
+        item.put("rent",rent.isChecked());
+        item.put("price",price.getText().toString());
+        item.put("location",location.getText().toString());
+        item.put("phone",phone.getText().toString());
+        db.collection("items")
+                .add(item)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(context, "Item added successfully", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                        Toast.makeText(context, "An error has occurred while adding item", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void EventHandler() {
