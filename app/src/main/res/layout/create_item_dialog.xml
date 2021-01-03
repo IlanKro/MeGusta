@@ -58,7 +58,7 @@
         android:id="@+id/add_img_btn"
         android:maxHeight="5dp"
         android:maxWidth="5dp"
-        android:textSize="10sp"
+        android:textSize="12sp"
          />
     <TextView
         android:layout_width="wrap_content"
@@ -84,8 +84,9 @@
 
     <Spinner
         android:id="@+id/category"
-        android:layout_width="79dp"
-        android:layout_height="wrap_content"
+        android:layout_width="209dp"
+        android:layout_height="42dp"
+        android:textSize="12sp"
         tools:layout_conversion_absoluteHeight="24dp"
         tools:layout_conversion_absoluteWidth="143dp"
         tools:layout_editor_absoluteX="134dp"
@@ -149,13 +150,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnDialogCancel"
+            android:id="@+id/btnDialogAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_item" />
 
         <Button
-            android:id="@+id/btnDialogAdd"
+            android:id="@+id/btnDialogCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel" />

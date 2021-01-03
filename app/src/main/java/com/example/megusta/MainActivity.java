@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this,"username & password saved",Toast.LENGTH_SHORT).show();
     }
     public void logIn(FirebaseUser user) {
-        Toast.makeText(this,"SUCCESS!!!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Logging in...", Toast.LENGTH_SHORT).show();
         Intent intent= new Intent(this,MainMenu.class);
         startActivity(intent);
     }
