@@ -3,11 +3,14 @@ package com.example.megusta;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import  androidx.appcompat.widget.Toolbar;
 
@@ -16,10 +19,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //TODO every card will have username,photo,price,rent/sell,location,phone number
-public class MainMenu extends AppCompatActivity implements View.OnClickListener {
+public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
     private FloatingActionButton add_item_btn;
+    private MenuItem view_items;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,15 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
         add_item_btn=findViewById(R.id.add_item_plus);
         add_item_btn.setOnClickListener(this);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -54,6 +67,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
                 startActivity(intent);
                 finish();
                 return true;
+            case R.id.view_items:
+                startActivity(new Intent(this, ViewItems.class));
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -67,4 +83,5 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener 
             dia.CreateDialog(this);
         }
     }
+
 }

@@ -26,7 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Dictionary;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +54,7 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         db=FirebaseFirestore.getInstance();
         mAuth=FirebaseAuth.getInstance();
         current_user=mAuth.getCurrentUser();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
     public void CreateDialog(@NonNull Context context) {
         setContentView(R.layout.create_item_dialog);
@@ -98,7 +100,6 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         if(view==btn_add) {
             try {
                 if (validateItem()) { //check if the validation is right.
-                    //TODO add to database
                     addItem();
                     this.dismiss();
                 }
@@ -130,6 +131,8 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         item.put("price",price.getText().toString());
         item.put("location",location.getText().toString());
         item.put("phone",phone.getText().toString());
+        item.put("email",current_user.getEmail());
+        item.put("date", GregorianCalendar.getInstance().getTime().toString());
         db.collection("items")
                 .add(item)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

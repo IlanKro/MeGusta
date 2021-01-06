@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="left"
+    android:layout_marginLeft="10dp"
+   android:paddingLeft="10dp"
     android:id="@+id/linearLayout">
 
     <TextView
@@ -13,66 +15,90 @@
         android:layout_height="wrap_content"
         android:text="@string/add_item"
         android:textSize="30sp"
+        android:gravity="center"
+        android:layout_gravity="center"
         tools:layout_conversion_absoluteHeight="40dp"
         tools:layout_editor_absoluteY="118dp"
         tools:layout_editor_absoluteX="145dp"
         tools:layout_conversion_absoluteWidth="121dp" />
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/item_name"
-        tools:layout_conversion_absoluteHeight="19dp"
-        tools:layout_editor_absoluteY="158dp"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_conversion_absoluteWidth="66dp" />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:hint="@string/item_name"
-        android:id="@+id/item_name"
-        android:autofillHints=""
-        android:inputType="text"
-        tools:layout_conversion_absoluteHeight="45dp"
-        tools:layout_editor_absoluteY="178dp"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_conversion_absoluteWidth="200dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_photo"
-        tools:layout_conversion_absoluteHeight="19dp"
-        tools:layout_editor_absoluteY="222dp"
-        tools:layout_editor_absoluteX="187dp"
-        tools:layout_conversion_absoluteWidth="36dp" />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/photo"
-        />
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_name"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_editor_absoluteY="158dp"
+            tools:layout_editor_absoluteX="173dp"
+            tools:layout_conversion_absoluteWidth="66dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="@string/item_name"
+            android:id="@+id/item_name"
+            android:autofillHints=""
+            android:inputType="text"
+            tools:layout_conversion_absoluteHeight="45dp"
+            tools:layout_editor_absoluteY="178dp"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_conversion_absoluteWidth="200dp" />
 
-    <Button
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="upload image"
-        android:id="@+id/add_img_btn"
-        android:maxHeight="5dp"
-        android:maxWidth="5dp"
-        android:textSize="12sp"
-         />
-    <TextView
+        android:orientation="horizontal"
+        android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_photo"
+                tools:layout_conversion_absoluteHeight="19dp"
+                tools:layout_editor_absoluteY="222dp"
+                tools:layout_editor_absoluteX="187dp"
+                tools:layout_conversion_absoluteWidth="36dp" />
+
+            <Button
+                android:id="@+id/add_img_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:text="@string/upload_image"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/photo"
+                />
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/item_price"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:hint="@string/item_price"
-        android:id="@+id/item_price"
-        android:autofillHints=""
-        android:inputType="numberDecimal"
-         />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_price"/>
+
+        <EditText
+            android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:hint="@string/item_price"
+            android:inputType="numberDecimal"
+            android:text="" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,21 +141,31 @@
             tools:layout_editor_absoluteX="182dp"
             tools:layout_editor_absoluteY="417dp" />
     </LinearLayout>
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/item_location"/>
-    <EditText
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_location"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:hint="@string/item_location"
+            android:id="@+id/item_location"
+            android:autofillHints=""
+            android:inputType="text"
+            />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:hint="@string/item_location"
-        android:id="@+id/item_location"
-        android:autofillHints=""
-        android:inputType="text"
-        />
-
+        android:orientation="horizontal"
+        android:gravity="center">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,23 +179,26 @@
         android:autofillHints=""
         android:inputType="phone"
         />
-
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="bottom"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnDialogAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_item" />
+            android:text="@string/add_item"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/btnDialogCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 
 
