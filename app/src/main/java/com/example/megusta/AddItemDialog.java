@@ -90,6 +90,18 @@ public class AddItemDialog extends Dialog implements View.OnClickListener {
         if(name.getText().toString().isEmpty() || location.getText().toString().isEmpty() ||
            phone.getText().toString().isEmpty() || price.getText().toString().isEmpty())
             throw new ValidationException("All fields are required!");
+        else if(name.getText().toString().length()>32) {
+            throw new ValidationException("Name is too long, the maximum is 32 characters.");
+        }
+        else if(location.getText().toString().length()>16) {
+            throw new ValidationException("location is too long, the maximum is 16 characters.");
+        }
+        else if(price.getText().toString().length()>8) {
+            throw new ValidationException("price is too long,the maximum is 8 characters, please don't sell stuff people can't afford.");
+        }
+        else if(phone.getText().toString().length()>16) {
+            throw new ValidationException("phone is too long,the maximum is 16 characters"); //would put a phone validator but for this project this is enough.
+        }
         else if(Integer.parseInt(price.getText().toString())<0)
             throw new ValidationException("price can't be negative!");
         return true;

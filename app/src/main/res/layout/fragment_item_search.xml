@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ItemSearch">
 
-    <ScrollView
+    <ListView
+        android:id="@id/view_items_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="233dp">
+        android:layout_height="wrap_content">
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/grid"
-        >
+        >          </androidx.gridlayout.widget.GridLayout>
 
-        </androidx.gridlayout.widget.GridLayout>
-
-    </ScrollView>
-</androidx.core.widget.NestedScrollView>
+    </ListView>
+</ScrollView>

@@ -1,38 +1,47 @@
 package com.example.megusta;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.SuccessContinuation;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
+import java.util.List;
 
 public class ViewItems extends AppCompatActivity {
     private final CharSequence TITLE="View Items";
-    private ViewGroup items;
-    private GridLayout grid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_items);
         setTitle(TITLE);
-        LoadItems();
-    }
-
-    private void LoadItems() {
-        CardView card;
-        LayoutInflater inflater = LayoutInflater.from(this);
-        card=(CardView) inflater.inflate(R.layout.card_view,null);
-
-        items.addView(card);
-        grid=findViewById(R.id.grid);
-
+        //test=findViewById(R.id.test);
+        //test.setText(Item.getItemById("ctxUAkmYyHck9OTuX1tB", FirebaseFirestore.getInstance()).toString());
+        initiateFragment();
 
     }
+
+    private void initiateFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.view_items, CardViewFragment
+                        .newInstance(2),null)
+                .commit();
+    }
+
+
 }
