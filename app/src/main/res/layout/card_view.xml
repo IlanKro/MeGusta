@@ -27,6 +27,16 @@
                 android:layout_height="wrap_content"
                 >
                 <TextView
+                    android:id="@+id/item_date_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    />
+            </TableRow>
+            <TableRow
+                android:layout_height="wrap_content"
+                >
+                <TextView
                     android:id="@+id/item_username_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

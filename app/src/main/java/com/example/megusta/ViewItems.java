@@ -29,13 +29,13 @@ public class ViewItems extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_items);
         setTitle(TITLE);
-        //test=findViewById(R.id.test);
-        //test.setText(Item.getItemById("ctxUAkmYyHck9OTuX1tB", FirebaseFirestore.getInstance()).toString());
         initiateFragment();
 
     }
 
     private void initiateFragment() {
+        CardViewFragment.setFilter("email");
+        CardViewFragment.setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.view_items, CardViewFragment

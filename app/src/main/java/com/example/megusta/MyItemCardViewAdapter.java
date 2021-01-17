@@ -62,18 +62,19 @@ public class MyItemCardViewAdapter extends RecyclerView.Adapter<MyItemCardViewAd
             price=  mView.findViewById(R.id.item_price_card);
             location=  mView.findViewById(R.id.item_location_card);
             phone=  mView.findViewById(R.id.item_phone_card);
-            date=  mView.findViewById(R.id.item_username_card);
+            date=  mView.findViewById(R.id.item_date_card);
         }
 
         public void bind(Item item) {
+            date.setText("date posted: " + item.getDate());
             user_name.setText("username: " + item.getUser_name());
             name.setText("name: " + item.getName());
             category.setText("category: " + item.getCategory());
             rent.setText("rent: " + item.isRent());
-            price.setText("price: " + item.getPrice());
+            price.setText("price: " + item.getPrice() + " ₪");
             location.setText("location: " + item.getLocation());
             phone.setText("phone: " + item.getPhone());
-            date.setText("date posted: " + item.getDate());
+
         }
     }
 }

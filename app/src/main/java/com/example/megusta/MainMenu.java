@@ -27,6 +27,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener,
     private Toolbar toolbar;
     private FloatingActionButton add_item_btn;
     private TabLayout tab_layout;
+    private CardViewFragment category_fragment;
+    private final int VIEW_ITEMS=R.id.view_items_category; //the main view of the main menu.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener,
             getSupportActionBar().setTitle("hello, " +mAuth.getCurrentUser().getDisplayName());
         add_item_btn=findViewById(R.id.add_item_plus);
         add_item_btn.setOnClickListener(this);
+        makeTabLayout();
+    }
 
+    private void makeTabLayout() {
         tab_layout=findViewById(R.id.tabs);
         tab_layout.addTab(tab_layout.newTab().setText("Shoes"));
         tab_layout.addTab(tab_layout.newTab().setText("Shirts"));
@@ -48,6 +53,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener,
         tab_layout.addTab(tab_layout.newTab().setText("Coats and Jackets"));
         tab_layout.addTab(tab_layout.newTab().setText("Dresses"));
         tab_layout.addTab(tab_layout.newTab().setText("Accessories"));
+        //select the first one,more abstract than to point at "Shoes".
+        initiateFragment((String)tab_layout
+                .getTabAt(tab_layout.getSelectedTabPosition()).getText());
         tab_layout.addOnTabSelectedListener(this);
     }
 
@@ -96,46 +104,30 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener,
             AddItemDialog dia = new AddItemDialog(this);
             dia.CreateDialog(this);
         }
-        /*
-        else if (view==shoes) {
-            initiateFragment( R.id.shoes_tab,"Shoes");
-        }
-        else if (view==shirts) {
-            initiateFragment(R.id.shirts_tab,"Shirts");
-        }
-        else if (view==pants) {
-            initiateFragment(R.id.pants_tab,"Pants");
-        }
-        else if (view==coats_jackets) {
-            initiateFragment(R.id.coats_jackets_tab,"Coats and Jackets");
-        }
-        else if (view==accessories) {
-            initiateFragment(R.id.accessories_tab,"Accessories");
-        }
-         */
     }
 
-    private void initiateFragment(int id,String category) {
-        CardViewFragmentCategory.setCategory(category);
+    private void initiateFragment(String category) {
+        CardViewFragment.setFilter("item_category");
+        CardViewFragment.setValue(category);
+        category_fragment=CardViewFragment.newInstance(2);
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(id, CardViewFragmentCategory
-                        .newInstance(2),null)
+                .add(VIEW_ITEMS, category_fragment ,null)
                 .commit();
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-
+        initiateFragment((String)tab.getText());
     }
-
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
+        getSupportFragmentManager().beginTransaction().remove(category_fragment).commit();
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
+        getSupportFragmentManager().beginTransaction().remove(category_fragment).commit();
+        initiateFragment((String)tab.getText());
     }
 }

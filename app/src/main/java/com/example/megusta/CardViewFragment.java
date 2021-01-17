@@ -35,12 +35,17 @@ public class CardViewFragment extends Fragment {
     protected int mColumnCount = 2;
     protected List<Item> items = new ArrayList<>();
     protected RecyclerView list;
+
+
+    private static String filter;
+    private static String value;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public CardViewFragment() {
     }
+
 
 
     public static CardViewFragment newInstance(int columnCount) {
@@ -54,7 +59,7 @@ public class CardViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadUserItems(FirebaseAuth.getInstance().getCurrentUser().getEmail(), FirebaseFirestore.getInstance());
+        loadUserItems(FirebaseFirestore.getInstance());
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -74,9 +79,16 @@ public class CardViewFragment extends Fragment {
         return view;
     }
 
-    public void loadUserItems(String email, FirebaseFirestore db){
+    public static void setFilter(String filter) {
+        CardViewFragment.filter = filter;
+    }
+
+    public static void setValue(String field) {
+        CardViewFragment.value= field;
+    }
+    public void loadUserItems(FirebaseFirestore db){
       db.collection("items")
-                .whereEqualTo("email",email)
+                .whereEqualTo(filter,value)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     private static final String TAG = "load items";
