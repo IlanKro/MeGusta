@@ -99,10 +99,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View view) {
-
         if (view == add_item_btn) {
-            AddItemDialog dia = new AddItemDialog(this);
-            dia.CreateDialog(this);
+            startActivity(new Intent(this,AddItemActivity.class));
         }
     }
 
