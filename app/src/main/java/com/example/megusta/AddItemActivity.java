@@ -34,13 +34,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class AddItemActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText name,price,location,phone;
+    private String download_url;
+    private Bitmap to_upload;
     private ImageView photo;
     //spinner
     private Spinner spinner;
@@ -52,6 +60,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth mAuth;
     private FirebaseUser current_user;
     private FirebaseFirestore db;
+    private StorageReference mStorageRef;
     private String TAG="add_item";
     private static final int TAKE_PHOTO = 0;
     private static final int PICK_GALLERY = 1;
@@ -65,6 +74,8 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         current_user = mAuth.getCurrentUser();
+        to_upload=null;
+        download_url=null;
         createInterface();
     }
     private void createInterface() {
@@ -121,7 +132,10 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         if(view==btn_add) {
             try {
                 if (validateItem()) { //check if the validation is right.
-                    addItem();
+                    if (to_upload==null)
+                        addItem();
+                    else
+                        uploadImage(getImageUri(to_upload));
                 }
             }
             catch(ValidationException exception){
@@ -207,10 +221,9 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
             switch (requestCode) {
                 case TAKE_PHOTO:
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        imageView.setImageBitmap(selectedImage);
+                        to_upload= (Bitmap) data.getExtras().get("data");
+                        imageView.setImageBitmap(to_upload);
                     }
-
                     break;
                 case PICK_GALLERY:
                     if (resultCode == RESULT_OK && data != null) {
@@ -224,7 +237,8 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
                                 cursor.moveToFirst();
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
-                                imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                to_upload=BitmapFactory.decodeFile(picturePath);
+                                imageView.setImageBitmap(to_upload);
                                 cursor.close();
                             }
                         }
@@ -234,6 +248,37 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+
+    private void uploadImage(Uri image) {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        //adding a random number to mitigate a user uploading many files with the same name.
+        Random rand= new Random();
+        String path="images/" +
+        mAuth.getCurrentUser().getDisplayName() + "/" +
+                rand.nextInt(10000)
+                +getFileName(image);
+        StorageReference imageRef = mStorageRef.child(path);
+        Context context=this;
+        imageRef.putFile(image)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        download_url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                        Toast.makeText(context,"uploaded successfully!",
+                                Toast.LENGTH_LONG).show();
+                        addItem();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(context,"upload failed",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -257,14 +302,15 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         item.put("user_name",current_user.getDisplayName());
         item.put("item_name",name.getText().toString());
         item.put("item_category",category);
-        item.put("item_photo","FAKE_PATH"); //TODO: add image path.
+        if(download_url==null)
+            download_url="No photo";
+        item.put("item_photo",download_url);
         item.put("rent",rent.isChecked());
         item.put("price",price.getText().toString());
         item.put("location",location.getText().toString());
         item.put("phone",phone.getText().toString());
         item.put("email",current_user.getEmail());
         item.put("date", GregorianCalendar.getInstance().getTime().toString());
-
         db.collection("items")
                 .add(item)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -297,6 +343,34 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
                 category = "";
             }
         });
+    }
+
+    /**
+     * Service function to get the file name of an Uri object
+     * @param file Uri object to get file name from
+     * @return the name of the file.
+     */
+    private String getFileName(Uri file) {
+        String result = file.getPath();
+        int cut = result.lastIndexOf('/');
+        if (cut != -1) {
+            result = result.substring(cut + 1);
+            return result;
+        }
+        return ""; //in case the path is wrong.
+    }
+
+    /**
+     * service function to convert from bitmap to Uri.
+     * @param image bitmap image
+     * @return Uri object.
+     */
+    private Uri getImageUri(Bitmap image) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG,100, bytes);
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), image,
+                "Image", null);
+        return Uri.parse(path);
     }
 }
 
