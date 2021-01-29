@@ -1,9 +1,12 @@
 package com.example.megusta;
-
+/** Assignment: Concluding assignment
+ * Campus: Ashdod
+ * Author1: Ilan Kroter, ID: 323294843
+ * Author2: Noy Nir, ID: 207993940
+ **/
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+/**
+ * Sign up menu for the app.
+ */
 public class SignUpDialog extends Dialog implements View.OnClickListener {
     private Button btn_signup;
     private final Context context;
@@ -28,6 +34,10 @@ public class SignUpDialog extends Dialog implements View.OnClickListener {
     private final FirebaseAuth mAuth;
     private final String TITLE = "Signup";
 
+    /**
+     * Initiates the dialog.
+     * @param context the activity that called the dialog.
+     */
     public SignUpDialog(@NonNull Context context) {
         super(context);
         this.context = context;
@@ -35,6 +45,9 @@ public class SignUpDialog extends Dialog implements View.OnClickListener {
         createSignupDialog();
     }
 
+    /**
+     * The UI creation and initialization.
+     */
     private void createSignupDialog() {
         setContentView(R.layout.signup_dialog);
         setTitle(TITLE);
@@ -48,6 +61,11 @@ public class SignUpDialog extends Dialog implements View.OnClickListener {
         show();
     }
 
+    /**
+     * Validates that the sign up is up to some standards.
+     * @return true if validated
+     * @throws ValidationException an error with the reason why the validation failed.
+     */
     private boolean validateSignup() throws ValidationException {
         if (password.getText().toString().isEmpty() || email.getText().toString().isEmpty()
                 || username.getText().toString().isEmpty() || password_confirm.getText().toString().isEmpty())
@@ -64,11 +82,22 @@ public class SignUpDialog extends Dialog implements View.OnClickListener {
             return true;
     }
 
+    /**
+     * Checks if an Email address makes sense.
+     * @param target the Email to check.
+     * @return Boolean if an email address is in the right format or not.
+     */
     private static boolean isValidEmail(CharSequence target) {
         //validates email address.
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
+    /**
+     * Creates a new user in Firebase.
+     * @param email the email to assign the account to
+     * @param password the password of the user.
+     * @param display_name the display name in app.
+     */
     private void createNewUser(String email, String password, String display_name) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
             @Override
@@ -89,6 +118,10 @@ public class SignUpDialog extends Dialog implements View.OnClickListener {
         });
     }
 
+    /**
+     * On click listener for the buttons on dialog.
+     * @param view the view to listen to.
+     */
     @Override
     public void onClick(View view) {
         if (view == btn_signup) {

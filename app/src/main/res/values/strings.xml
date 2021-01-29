@@ -11,13 +11,13 @@
     <string name="add_item">Add item</string>
     <string name="cancel">Cancel</string>
     <!-- item creation -->
-    <string name="item_name">item name: </string>
-    <string name="item_photo">photo: </string>
-    <string name="item_price">price(₪): </string>
-    <string name="item_category">category: </string>
+    <string name="item_name">item name </string>
+    <string name="item_photo">photo </string>
+    <string name="item_price">price(₪) </string>
+    <string name="item_category">category </string>
     <string name="item_rent">rent? </string>
-    <string name="item_location">location: </string>
-    <string name="item_phone">phone number: </string>
+    <string name="item_location">location </string>
+    <string name="item_phone">phone number </string>
     <string name="category1">Shoes</string>
     <string name="category2">Shirts</string>
     <string name="category3">Pants</string>
@@ -44,4 +44,5 @@
     <string name="location_card">location:</string>
     <string name="phone_card">phone:</string>
     <string name="placeholder">PLACEHOLDER</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>

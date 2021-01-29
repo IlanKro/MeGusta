@@ -35,4 +35,11 @@
         android:id="@+id/btnDialogLogin"
         android:text="@string/login"
         android:layout_marginTop="100dp" />
+    <TextView
+        android:id="@+id/forgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password"
+        android:clickable="true"
+        android:focusable="true" />
 </LinearLayout>

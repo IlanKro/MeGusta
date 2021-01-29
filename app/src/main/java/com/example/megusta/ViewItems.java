@@ -1,29 +1,26 @@
 package com.example.megusta;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+/** Assignment: Concluding assignment
+ * Campus: Ashdod
+ * Author1: Ilan Kroter, ID: 323294843
+ * Author2: Noy Nir, ID: 207993940
+ **/
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.GridLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.SuccessContinuation;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * View and delete items the user posted.
+ */
 public class ViewItems extends AppCompatActivity {
     private final CharSequence TITLE="View Items";
 
-
+    /**
+     * default constructor sets up the fragment that shows the user items.
+     * @param savedInstanceState return the activity to how it was before.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,16 +29,16 @@ public class ViewItems extends AppCompatActivity {
         initiateFragment();
 
     }
-
+    /**
+     * sets up the fragment.
+     */
     private void initiateFragment() {
-        CardViewFragment.setFilter("email");
-        CardViewFragment.setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        String filter="email";
+        String value=FirebaseAuth.getInstance().getCurrentUser().getEmail();
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.view_items, CardViewFragment
-                        .newInstance(2),null)
+                        .newInstance(2,filter,value),null)
                 .commit();
     }
-
-
 }
